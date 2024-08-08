@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+	<String Id="ProductName" Overridable="yes">HL7 Sender</String>
+	<String Id="UserRegistrationDlg_Title" Overridable="yes">[ProductName] Setup</String>
+	<String Id="UserRegistrationDlg_UserName" Overridable="yes">&amp;User Name:</String>
+	<String Id="UserRegistrationDlg_Organization" Overridable="yes">&amp;Organization:</String>
+	<String Id="UserRegistrationDlg_Key" Overridable="yes">CD &amp;Key:</String>
+	<String Id="UserRegistrationDlgNext" Overridable="yes">&amp;Next</String>
+	<String Id="UserRegistrationDlgBack" Overridable="yes">&amp;Back</String>
+	<String Id="UserRegistrationDlgCancel" Overridable="yes">Cancel</String>
+	<String Id="UserRegistrationDlg_Description" Overridable="yes">Please enter your customer information</String>
+	<String Id="UserRegistrationDlgTitle" Overridable="yes">Customer Information</String>
+
+	<String Id="HL7Config_Title" Overridable="yes">[ProductName] Setup</String>
+	<String Id="HL7Config_HostName" Overridable="yes">&amp;Host Name:</String>
+	<String Id="HL7Config_ServerPort" Overridable="yes">&amp;Server Port :</String>
+	<String Id="HL7Config_PfxthumbPrint" Overridable="yes">&amp;PFX Thumbprint:</String>
+	<String Id="HL7Config_SRC" Overridable="yes">&amp;SRC</String>
+	<String Id="HL7Config_IPAddressIndex" Overridable="yes">&amp;IPAddress Index:</String>
+	<String Id="HL7Config_Next" Overridable="yes">&amp;Next</String>
+	<String Id="HL7Config_Back" Overridable="yes">&amp;Back</String>
+	<String Id="HL7Config_Cancel" Overridable="yes">Cancel</String>
+	<String Id="HL7Config_Description" Overridable="yes">Enter Configuration details</String>
+	<String Id="HL7Config_Title" Overridable="yes">Config File Details</String>
+
+	<String Id="Company" Overridable="yes">Fujitsu</String>
+	<String Id="InstallFolderName" Overridable="yes">HL7_Sender</String>
+	<String Id="ProductDescription" Overridable="yes">This application is an alternative to the 7 Edit as it doesn't support 2-way SSL</String>
+	<String Id="DowngradeMessage" Overridable="yes">A newer version of [ProductName] is already installed.</String>
+
+</WixLocalization>

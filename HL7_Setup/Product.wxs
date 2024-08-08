@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" 
+	 xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+	 xmlns:fg="http://www.firegiant.com/schemas/v3/wxs/fgwep.xsd"
+	 >
+	<Product 
+		Id="*" 
+		Name="!(loc.ProductName)" 
+		Language="1033" 
+		Version="1.0.0.0" 
+		Manufacturer="!(loc.Company)" 
+		UpgradeCode="9e7ca970-87c5-45cb-8dd6-e284ddcfaa0b">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeMessage)" />
+		
+		<!-- Include .cab file into .msi file-->
+		<MediaTemplate EmbedCab="yes" />
+		
+		<!--Application Icon setup-->
+		<Icon Id="icon.ico" SourceFile="$(var.ProjectDir)/hl7_Icon.ico"/>
+		
+		<!--Installer will use icon.ico as Icon-->
+		<Property Id ="ARPPRODUCTICON">icon.ico</Property>
+
+		<UI Id="MyWixUI_Mondo">
+			<UIRef Id="WixUI_Mondo" />
+			<UIRef Id="WixUI_ErrorProgressText" />
+
+			<DialogRef Id="HL7ConfigDlg" />
+
+			<Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="HL7ConfigDlg" Order="2">LicenseAccepted = "1"</Publish>
+			<Publish Dialog="SetupTypeDlg" Control="Back" Event="NewDialog" Value="HL7ConfigDlg">1</Publish>
+			<Property Id="WixUI_HL7ConfigDlgBack">LicenseAgreementDlg</Property>
+			<Property Id="WixUI_HL7ConfigDlgNext">SetupTypeDlg</Property>
+			
+			<!--Setting Default values-->
+			<Property Id="HOSTNAME" Value="G07SGXNFAP11083" />
+			<Property Id="SERVERPORT" Value="57207" />
+			<Property Id="PFXTHUMBPRINT" Value="e28217be425f76262dc29af7a7ef95e7842b3d3c" />
+			<Property Id="SRC" Value="tcp://localhost" />
+			<Property Id="IPINDEX" Value="1" />
+		</UI>
+		
+
+		<!--<Property Id="PIDTemplate"><![CDATA[12345<### ###>@@@@@]]></Property>-->
+		<Property Id="PIDTemplate" Value="e28217be425f76262dc29af7a7ef95e7842b3d3c"/>
+
+		<Feature Id="ProductFeature" Title="!(loc.ProductName)" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentGroupRef Id="PublishedComponents"/>
+		</Feature>
+	</Product>
+</Wix>
