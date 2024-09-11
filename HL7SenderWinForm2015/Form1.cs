@@ -25,8 +25,9 @@ namespace HL7SenderWinForm2015
 {
     public partial class Form1 : Form
     {
-        private static readonly ILog AppLog = log4net.LogManager.GetLogger("RollingFileAppender");
-
+        private static readonly ILog _log = log4net.LogManager.GetLogger("RollingFileAppender");
+        private static IMessage msg = null;
+        private static string VT = "\v";
 
         X509Certificate clientCertificate = null;
         public Form1()
@@ -42,12 +43,12 @@ namespace HL7SenderWinForm2015
         {
             if (sslPolicyErrors == SslPolicyErrors.None)
             {
-                AppLog.Info("No Certificate Errors.");
+                _log.Info("No Certificate Errors.");
                 return true;
             }
             else
             {
-                AppLog.Error("Certificate error: "+ sslPolicyErrors);
+                _log.ErrorFormat("Certificate error: {0}", sslPolicyErrors);
 
                 // Do not allow this client to communicate with unauthenticated servers.
                 return false;
@@ -71,18 +72,17 @@ namespace HL7SenderWinForm2015
 
             try
             {
-                //AppLog.Debug("\n\n");
-                AppLog.Info("Preparing to send Message");
+                _log.Info("Preparing to send Message");
                 string msHL7 = Regex.Replace(txtHL7.Text, @"\r\n|\n\r|\n|\r", "\r");
-                //string msHL7 = txtHL7.Text.Replace("\n", "\r");
 
-                AppLog.Info("Start parsing the Message");
+                _log.Info("Start parsing the Message");
                 PipeParser pp = new PipeParser();
-                IMessage msg = pp.Parse(Parse.removeNKwDTM(msHL7));
-                AppLog.Info("End parsing the Message");
+                msg = pp.Parse(Parse.removeNKwDTM(msHL7));
+                _log.Info("End parsing the Message");
                 string messageType = msg.GetStructureName();
-                //string msg = "Not Null";
-                bool sslcondition = bool.Parse(ConfigurationManager.AppSettings["SSL"]);// "tcp://localhost";
+
+                bool sslcondition = bool.Parse(ConfigurationManager.AppSettings["SSL"]);
+                
                 if (msg != null)
                 {
                     if (sslcondition)
@@ -96,13 +96,13 @@ namespace HL7SenderWinForm2015
                 }
                 else
                 {
-                    AppLog.Error("Unable to parse message");
+                    _log.Error("Unable to parse message");
                     MessageBox.Show("Unable to parse the message");
                 }
             }
             catch (Exception ex)
             {
-                AppLog.Error("Exception : "+ ex);
+                _log.Error("Exception : {ex}", ex);
                 MessageBox.Show("Error : Unable to parse the message " + ex);
             }
         }
@@ -112,7 +112,7 @@ namespace HL7SenderWinForm2015
             try
             {
                 //Socket Sender 
-                string srcAddress = ConfigurationManager.AppSettings["SRC"];// "tcp://localhost";
+                string srcAddress = ConfigurationManager.AppSettings["SRC"];
                 int index = int.Parse(ConfigurationManager.AppSettings["IPAddressIndex"]);
                 Uri src = new Uri(srcAddress);
                 int Port = int.Parse(ConfigurationManager.AppSettings["ServerPort"]);
@@ -124,7 +124,7 @@ namespace HL7SenderWinForm2015
                        SocketType.Stream, ProtocolType.Tcp);
                 sender.Connect(localEndPoint);
 
-                AppLog.Info("Client connected.");
+                _log.Info("Client connected.");
 
                 NetworkStream networkStream = new NetworkStream(sender, true);
 
@@ -147,12 +147,13 @@ namespace HL7SenderWinForm2015
                     clientCertificate = Load(out X509Certificate2 x509Certificate2);
                     if (x509Certificate2 != null)
                     {
-                        AppLog.Info("SSL Certificate loaded successfully ; Thumbprint : " + x509Certificate2.Thumbprint);
+                        _log.InfoFormat("SSL Certificate loaded successfully ; Thumbprint : {TP}",  x509Certificate2.Thumbprint);
 
                     }
                     else
                     {
-                        AppLog.Info("No SSL cert Loaded");
+                        _log.Info("No SSL cert Loaded");
+                        throw new Exception("No SSL cert with the specified thumbprint found");
                     }
                     X509CertificateCollection CertificatesCollection = new X509CertificateCollection();
                     CertificatesCollection.Add(clientCertificate);
@@ -163,7 +164,7 @@ namespace HL7SenderWinForm2015
                     }
                     catch (AuthenticationException e)
                     {
-                        AppLog.Error("AuthenticationException " + e);
+                        _log.Error("AuthenticationException {ex}", e);
                         MessageBox.Show("AuthenticationException " + e);
                     }
                 }
@@ -175,15 +176,15 @@ namespace HL7SenderWinForm2015
                     }
                     catch (AuthenticationException e)
                     {
-                        AppLog.Error("AuthenticationException " + e);
+                        _log.Error("AuthenticationException {ex}", e);
                         MessageBox.Show("AuthenticationException " + e);
                     }
                 }
 
-                StringBuilder sb = new StringBuilder("");//Extra charecter to be removed in PIB IE
+                StringBuilder sb = new StringBuilder(VT);//Extra charecter to be removed in PIB IE
+
                 sb.Append(HL7Message);
                 byte[] messsage = Encoding.UTF8.GetBytes(sb.ToString());
-                //byte[] messsage = Encoding.UTF8.GetBytes("~"+HL7Message);
                 
 
                 sslStream.Write(messsage);
@@ -191,33 +192,33 @@ namespace HL7SenderWinForm2015
 
                 // Read message from the server.
                 string serverMessage = ReadMessage(sslStream);
-                AppLog.Info("ACK message from server :" + (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : "No ACK"));
+                _log.InfoFormat("ACK message from server : {ServerMessage} " , (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : "No ACK"));
                 MessageBox.Show("ACK message from server : " + (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : "No ACK"));
             }
             catch (AuthenticationException e)
             {
-                AppLog.Info("AuthenticationException " + e);
+                _log.Info("AuthenticationException {ex}", e);
                 MessageBox.Show("AuthenticationException " + e);
             }
             catch (IOException e)
             {
                 MessageBox.Show("IOException " + e);
-                AppLog.Info("IOException " + e);
+                _log.Info("IOException {ex}", e);
 
             }
             catch(SocketException ex)
             {
-                AppLog.Info("Socket Exception {ex} " , ex);
+                _log.Info("Socket Exception {ex} " , ex);
             }
             catch (Exception e)
             {
                 MessageBox.Show("Exception " + e);
-                AppLog.Info("Exception " + e);
+                _log.Info("Exception {ex}", e);
 
             }
             finally
             {
-                AppLog.Info("End sending message \n\n ");
+                _log.Info("End sending message \n\n ");
             }
 
         }
@@ -230,7 +231,7 @@ namespace HL7SenderWinForm2015
 
 
                 //Socket Sender 
-                string srcAddress = ConfigurationManager.AppSettings["SRC"];// "tcp://localhost";
+                string srcAddress = ConfigurationManager.AppSettings["SRC"];
                 int index = int.Parse(ConfigurationManager.AppSettings["IPAddressIndex"]);
                 Uri src = new Uri(srcAddress);
                 int Port = int.Parse(ConfigurationManager.AppSettings["ServerPort"]);
@@ -242,12 +243,10 @@ namespace HL7SenderWinForm2015
                        SocketType.Stream, ProtocolType.Tcp);
                 sender.Connect(localEndPoint);
 
-                AppLog.Info("Client connected.");
+                _log.Info("Client connected.");
 
                 NetworkStream networkStream = new NetworkStream(sender, true);
-
-                StringBuilder sb = new StringBuilder("");//Extra charecter to be removed in PIB IE
-                sb.Append(HL7Message);
+                
                 byte[] message = Encoding.UTF8.GetBytes("~" + HL7Message);
 
                 networkStream.Write(message, 0, message.Length);
@@ -284,24 +283,23 @@ namespace HL7SenderWinForm2015
                 // Read message from the server.
                 var buffer = new byte[1_024];
 
-                //int received = stream.Read(buffer, 0, buffer.Length);
                 int received = networkStream.Read(buffer, 0, buffer.Length);
                 var serverMessage = Encoding.UTF8.GetString(buffer, 0, received);
                 /*string serverMessage = ReadMessage(sslStream)*/
                 ;
-                AppLog.Info("ACK message from server :" + (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : "No ACK"));
+                _log.InfoFormat("ACK message from server :{0}" , (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : "No ACK"));
                 MessageBox.Show("ACK message from server : " + (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : "No ACK"));
             }
            
             catch (Exception e)
             {
                 MessageBox.Show("Exception " + e);
-                AppLog.Info("Exception " + e);
+                _log.Info("Exception {ex}", e);
 
             }
             finally
             {
-                AppLog.Info("End sending message \n\n ");
+                _log.Info("End sending message \n\n ");
             }
 
         } 
@@ -310,45 +308,52 @@ namespace HL7SenderWinForm2015
             byte[] buffer = new byte[8192];
             StringBuilder messageData = new StringBuilder();
             int bytes = -1;
-            do
-            {
-                bytes = sslStream.Read(buffer, 0, buffer.Length);
 
-                // Use Decoder class to convert from bytes to UTF8
-                // in case a character spans two buffers.
-                Decoder decoder = Encoding.UTF8.GetDecoder();
-                char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
-                decoder.GetChars(buffer, 0, bytes, chars, 0);
-                messageData.Append(chars);
-                break;
-            } while (bytes != 0);
+            bytes = sslStream.Read(buffer, 0, buffer.Length);
+
+            Decoder decoder = Encoding.UTF8.GetDecoder();
+            char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
+            decoder.GetChars(buffer, 0, bytes, chars, 0);
+            messageData.Append(chars);
 
             return messageData.ToString();
         }
         public X509Certificate2 Load(out X509Certificate2 x509_2)
         {
-            AppLog.Info("Start Loading the SSL Certificate");
+            _log.Info("Start Loading the SSL Certificate");
 
             x509_2 = null;
             X509Certificate2 x509Certificate = null;
             
-            X509Store store;
+            X509Store store = null;
             string certDir = System.Configuration.ConfigurationManager.AppSettings["CertDir"];
-            if (certDir == "Personal")
+
+            if (!string.IsNullOrWhiteSpace(certDir))
             {
-                store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+                switch (certDir)
+                {
+                    case "Personal":
+                        store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+                        break;
+
+                    case "Publisher":
+                        store = new X509Store(StoreName.TrustedPublisher, StoreLocation.LocalMachine);
+                        break ;
+
+                    case "Root":
+                        store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
+                        break;
+
+                    default:
+                        store = new X509Store(StoreName.TrustedPublisher, StoreLocation.LocalMachine);
+                        break;
+
+                }
             }
-            else if (certDir == "Publisher")
-            {
-                store = new X509Store(StoreName.TrustedPublisher, StoreLocation.LocalMachine);
-            }
-            else if (certDir == "Root")
-            {
-                store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
-            }
+
             else
             {
-                store = new X509Store(StoreName.TrustedPublisher, StoreLocation.LocalMachine);
+                throw new Exception("Store Name is not specified");
             }
 
             string thumbPrint = StripTheSpacesAndMakeItUpper(ConfigurationManager.AppSettings["pfxthumbPrint"]);

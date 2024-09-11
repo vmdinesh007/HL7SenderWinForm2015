@@ -2,13 +2,13 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="INSTALLFOLDER">
-            <Component Id="cmp92CDF83408E5615434E15613772F5E7C" Guid="{F24C801B-45E6-40FF-A96C-A412B2B9F9AD}">
+            <Component Id="cmp92CDF83408E5615434E15613772F5E7C" Guid="{13706A99-B622-4340-9ABA-38B7070DA64E}">
                 <File Id="filC997D98DF3511F9C6B2CEC2BC43495C3" KeyPath="yes" Source="$(var.BasePath)\(null).log" />
             </Component>
-            <Component Id="cmpC1D9E0844D2E4AFB937FF4F217485F9B" Guid="{CF460CCB-CC3A-428E-B214-27D8421FC83C}">
+            <Component Id="cmpC1D9E0844D2E4AFB937FF4F217485F9B" Guid="{FA79BFFF-B3DF-48C5-9A34-62B61EB9FDF6}">
                 <File Id="filE22341AF2206CB60356461A056123EE7" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.exe" />
             </Component>
-            <Component Id="cmpEFAB68C7CD45D5422D0973F740293912" Guid="{16910F09-CEF2-44D0-A1AB-1B62FC973FB8}">
+            <Component Id="cmpEFAB68C7CD45D5422D0973F740293912" Guid="{A4BC7ED2-6A4F-489E-9E3B-2FCE665EB1A8}">
                 <File Id="filFEDCE752CEEB47ED4DD897B32B91D60D" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.exe.config" />
                 <util:XmlFile Id="XmlHostName" Action="setValue" Permanent="yes" File="[#filFEDCE752CEEB47ED4DD897B32B91D60D]" ElementPath="//configuration/appSettings/add[\[]@key='HostName'[\]]" Value="[HOSTNAME]" Name="value" SelectionLanguage="XSLPattern" Sequence="1" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" />
                 <util:XmlFile Id="XmlServerPort" Action="setValue" Permanent="yes" File="[#filFEDCE752CEEB47ED4DD897B32B91D60D]" ElementPath="//configuration/appSettings/add[\[]@key='ServerPort'[\]]" Value="[SERVERPORT]" Name="value" SelectionLanguage="XSLPattern" Sequence="1" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" />
@@ -16,35 +16,35 @@
                 <util:XmlFile Id="XmlSRC" Action="setValue" Permanent="yes" File="[#filFEDCE752CEEB47ED4DD897B32B91D60D]" ElementPath="//configuration/appSettings/add[\[]@key='SRC'[\]]" Value="[SRC]" Name="value" SelectionLanguage="XSLPattern" Sequence="1" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" />
                 <util:XmlFile Id="XmlIPAddressIndex" Action="setValue" Permanent="yes" File="[#filFEDCE752CEEB47ED4DD897B32B91D60D]" ElementPath="//configuration/appSettings/add[\[]@key='IPAddressIndex'[\]]" Value="[IPINDEX]" Name="value" SelectionLanguage="XSLPattern" Sequence="1" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" />
             </Component>
-            <Component Id="cmp37F78D31E5AD332A9F03F3AD99CB1E5E" Guid="{A92BE18D-654B-47B9-B920-E6A5CD5B9597}">
+            <Component Id="cmp37F78D31E5AD332A9F03F3AD99CB1E5E" Guid="{FB7C0DAC-C358-41BB-B5AF-004599D3CD7F}">
                 <File Id="filABF4C773A723BD0725C67299C4B2F299" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.pdb" />
             </Component>
-            <Component Id="cmp6E21552E08BAE305FCD785CBB0E6F67D" Guid="{F60A0AA6-165B-49AF-9CC9-79455F033A53}">
+            <Component Id="cmp6E21552E08BAE305FCD785CBB0E6F67D" Guid="{1CA3B1E6-BB0D-425B-BD07-CC64D59783C9}">
                 <File Id="fil412B29ADB18DD558D515AECE8A15E1CA" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.vshost.exe" />
             </Component>
-            <Component Id="cmp60035D4873E82CAA65E603F75A81397D" Guid="{44D2ECDB-C675-4BDB-9FF1-91704D42C941}">
+            <Component Id="cmp60035D4873E82CAA65E603F75A81397D" Guid="{5486C73C-6FB9-4D2F-BFE2-2BDC15FFA5B1}">
                 <File Id="filD87F2BCFD96F1682A224E1DD1774C613" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.vshost.exe.config" />
             </Component>
-            <Component Id="cmp6F1BB5F1BE41D46AE9A91FC55C1D51F5" Guid="{E7E2C742-664F-419D-9F33-18BEDDA70686}">
+            <Component Id="cmp6F1BB5F1BE41D46AE9A91FC55C1D51F5" Guid="{79CA46BB-69F6-4FE5-B9DF-D19112927005}">
                 <File Id="fil7EF26304A2947C440B02BA54251B4092" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.vshost.exe.config.bak" />
             </Component>
-            <Component Id="cmp3B34260CF4FF7B33D4866B96F08889E9" Guid="{E7615484-690F-4AD8-8B07-06E4E0709F33}">
+            <Component Id="cmp3B34260CF4FF7B33D4866B96F08889E9" Guid="{78C5227B-5021-47C8-9AAD-FD566A48DEB0}">
                 <File Id="filA5EDA956E250865629D8F513F2D759FA" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.vshost.exe.manifest" />
             </Component>
-            <Component Id="cmp13D58469BCB864EB53214ED46E622188" Guid="{AE0BA11B-3EA5-46B1-93D9-D384D3034D74}">
+            <Component Id="cmp13D58469BCB864EB53214ED46E622188" Guid="{5F69438B-8E43-446B-85AC-181D763B4130}">
                 <File Id="fil28F7A9478894C77C5F6C2A95DAA4B459" KeyPath="yes" Source="$(var.BasePath)\log4net.dll" />
             </Component>
-            <Component Id="cmp742785C9A7B88BE6B2E81C2322E3D2EE" Guid="{5B0F24D8-33C3-49A8-B65B-51D2F134B5F7}">
+            <Component Id="cmp742785C9A7B88BE6B2E81C2322E3D2EE" Guid="{F960E550-9B09-4565-B802-C2D27C94D2E0}">
                 <File Id="filA307C00D897BECB908C510DE71A3AD29" KeyPath="yes" Source="$(var.BasePath)\log4net.xml" />
             </Component>
-            <Component Id="cmp36ADCC7C7F9082723349FB99FC4FCB94" Guid="{9A3D7200-3F91-497F-BB35-97DD3B767CCA}">
+            <Component Id="cmp36ADCC7C7F9082723349FB99FC4FCB94" Guid="{80577FE5-9824-4D81-B43C-9E7B1AF957D2}">
                 <File Id="fil7C2B3E1C136901B5AD0E908A0A23669A" KeyPath="yes" Source="$(var.BasePath)\NHapi.Base.dll" />
             </Component>
-            <Component Id="cmp2B9D8161CA39CCBD738F072E8244C711" Guid="{108D067F-2E98-4CE0-8011-9922A35D9960}">
+            <Component Id="cmp2B9D8161CA39CCBD738F072E8244C711" Guid="{D31CB864-4F52-4879-BCAF-D69C774BEE62}">
                 <File Id="filC3184CED8C9B8DC275C98F256DC44EE8" KeyPath="yes" Source="$(var.BasePath)\NHapi.Model.V23.dll" />
             </Component>
             <Directory Id="dirC40AC364B5E0B46638A4945083D7F012" Name="Log">
-                <Component Id="cmp2A3EF4B8B7D9A131EF987AB65DDC5CF4" Guid="{04C354B2-1EE4-4033-AD50-92D9232401DA}">
+                <Component Id="cmp2A3EF4B8B7D9A131EF987AB65DDC5CF4" Guid="{B3BFAB4A-A1A1-44F9-BA96-6723A817C9FB}">
                     <File Id="filA01ED10481E0E7444FAC39D0C770024A" KeyPath="yes" Source="$(var.BasePath)\Log\log.log" />
                 </Component>
             </Directory>
