@@ -14,14 +14,14 @@ namespace HL7SenderWinForm2015
 {
     public static class Parse
     {
-        private static readonly ILog AppLog = log4net.LogManager.GetLogger("RollingFileAppender");
+        private static readonly ILog _log = log4net.LogManager.GetLogger("RollingFileAppender");
         public static string removeNKwDTM(string message)
         {
             string retmessage = message;
             
             try
             {
-                retmessage = message = filterSegment(message);
+                retmessage = filterSegment(message);
             }
 
             catch (Exception e)
@@ -34,11 +34,11 @@ namespace HL7SenderWinForm2015
         {
             try
             {
-                AppLog.Info("Start Filtering the segments.");
+                _log.Info("Start Filtering the segments.");
 
                 IEnumerable<string> segmentsToFilter = ADTSegmentsToFilter;
-                List<string> filteredSegments = new List<string>();
-                List<string> Segments = new List<string>();
+                List<string> filteredSegments;
+                List<string> Segments;
                 string structureName = null;
                 string msgToParse = msg;
                 msgToParse = removeSegments(msgToParse, segmentsToFilter, out Segments);
@@ -53,8 +53,6 @@ namespace HL7SenderWinForm2015
                 //Check whether HL7 received is GS ADT message.
                 if (GSADTMessageType.Contains(structureName) || msg.Contains(ADT_60))
                 {
-                    //AppLog.Info("#Start Filtering Segments");                   
-
                     //IAM segment doesn't get filtered out in ADT_A60
                     if (msg.Contains(ADT_60))
                     {
@@ -67,20 +65,20 @@ namespace HL7SenderWinForm2015
                     {
                         foreach (string seg in filteredSegments)
                         {
-                            AppLog.Info("# Filtered Segment : " + seg + "");
+                            _log.InfoFormat("# Filtered Segment : {seg}", seg);
                         }
                     }
                     else
                     {
-                        AppLog.Info("# No Segments to filter");
+                        _log.Info("# No Segments to filter");
                     }
                 }
-                AppLog.Info("# End Filtering Segments");
+                _log.Info("# End Filtering Segments");
             }
 
             catch (Exception ex)
             {
-                AppLog.Error("#" + "Exception " + ex);
+                _log.Error("# Exception {ex}" , ex);
             }
             return msg;
 
