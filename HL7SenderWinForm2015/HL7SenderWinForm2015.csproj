@@ -70,12 +70,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="InstallerSetup.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="InstallerSetup.Designer.cs">
-      <DependentUpon>InstallerSetup.cs</DependentUpon>
-    </Compile>
     <Compile Include="Parse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

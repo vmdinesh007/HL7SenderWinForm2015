@@ -25,17 +25,19 @@ namespace HL7SenderWinForm2015
 {
     public partial class Form1 : Form
     {
+        
         private static readonly ILog _log = log4net.LogManager.GetLogger("RollingFileAppender");
-        private static IMessage msg = null;
         private static string VT = "\v";
+        private NetworkStream networkStream;
+        private const string NoACK = "No ACK";
 
-        X509Certificate clientCertificate = null;
+        X509Certificate2 clientCertificate = null;
         public Form1()
         {
             InitializeComponent();
         }
 
-        public bool ValidateServerCertificate(
+        public static bool ValidateServerCertificate(
               object sender,
               X509Certificate certificate,
               X509Chain chain,
@@ -72,32 +74,21 @@ namespace HL7SenderWinForm2015
 
             try
             {
-                _log.Info("Preparing to send Message");
                 string msHL7 = Regex.Replace(txtHL7.Text, @"\r\n|\n\r|\n|\r", "\r");
 
                 _log.Info("Start parsing the Message");
                 PipeParser pp = new PipeParser();
-                msg = pp.Parse(Parse.removeNKwDTM(msHL7));
                 _log.Info("End parsing the Message");
-                string messageType = msg.GetStructureName();
 
                 bool sslcondition = bool.Parse(ConfigurationManager.AppSettings["SSL"]);
-                
-                if (msg != null)
+
+                if (sslcondition)
                 {
-                    if (sslcondition)
-                    {
-                        RunClient(msHL7);
-                    }
-                    else
-                    {
-                        RunClientwithoutSSL(msHL7);
-                    }
+                    RunClient(msHL7);
                 }
                 else
                 {
-                    _log.Error("Unable to parse message");
-                    MessageBox.Show("Unable to parse the message");
+                    RunClientwithoutSSL(msHL7);
                 }
             }
             catch (Exception ex)
@@ -107,7 +98,7 @@ namespace HL7SenderWinForm2015
             }
         }
 
-        public void RunClient(string HL7Message)
+        private void configureSocketSender()
         {
             try
             {
@@ -126,8 +117,20 @@ namespace HL7SenderWinForm2015
 
                 _log.Info("Client connected.");
 
-                NetworkStream networkStream = new NetworkStream(sender, true);
+                networkStream = new NetworkStream(sender, true);
 
+            }
+            catch(Exception ex) 
+            { 
+                _log.Error("Set Socket Exception : {ex}",ex);
+            }
+        }
+        public void RunClient(string HL7Message)
+        {
+            try
+            {
+                configureSocketSender();
+                
                 SslStream sslStream = new SslStream(
                     networkStream,
                     false,
@@ -144,16 +147,16 @@ namespace HL7SenderWinForm2015
 
                 if (twoWaySSL)
                 {
-                    clientCertificate = Load(out X509Certificate2 x509Certificate2);
-                    if (x509Certificate2 != null)
+                    clientCertificate = Load();
+                    if (clientCertificate != null)
                     {
-                        _log.InfoFormat("SSL Certificate loaded successfully ; Thumbprint : {TP}",  x509Certificate2.Thumbprint);
+                        _log.InfoFormat("SSL Certificate loaded successfully ; Thumbprint : {TP}", clientCertificate.Thumbprint);
 
                     }
                     else
                     {
                         _log.Info("No SSL cert Loaded");
-                        throw new Exception("No SSL cert with the specified thumbprint found");
+                        throw new ArgumentNullException("No SSL cert with the specified thumbprint found");
                     }
                     X509CertificateCollection CertificatesCollection = new X509CertificateCollection();
                     CertificatesCollection.Add(clientCertificate);
@@ -192,8 +195,8 @@ namespace HL7SenderWinForm2015
 
                 // Read message from the server.
                 string serverMessage = ReadMessage(sslStream);
-                _log.InfoFormat("ACK message from server : {ServerMessage} " , (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : "No ACK"));
-                MessageBox.Show("ACK message from server : " + (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : "No ACK"));
+                _log.InfoFormat("ACK message from server : {ServerMessage} " , (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : NoACK));
+                MessageBox.Show("ACK message from server : " + (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : NoACK));
             }
             catch (AuthenticationException e)
             {
@@ -229,23 +232,7 @@ namespace HL7SenderWinForm2015
             {
                 //Need to move to config file
 
-
-                //Socket Sender 
-                string srcAddress = ConfigurationManager.AppSettings["SRC"];
-                int index = int.Parse(ConfigurationManager.AppSettings["IPAddressIndex"]);
-                Uri src = new Uri(srcAddress);
-                int Port = int.Parse(ConfigurationManager.AppSettings["ServerPort"]);
-
-                IPAddress[] ipAddresses = Dns.GetHostAddresses(src.Host);
-                IPAddress ipAddr = ipAddresses[index];
-                IPEndPoint localEndPoint = new IPEndPoint(ipAddr, Port);//Need to move to config file
-                Socket sender = new Socket(ipAddr.AddressFamily,
-                       SocketType.Stream, ProtocolType.Tcp);
-                sender.Connect(localEndPoint);
-
-                _log.Info("Client connected.");
-
-                NetworkStream networkStream = new NetworkStream(sender, true);
+                configureSocketSender();
                 
                 byte[] message = Encoding.UTF8.GetBytes("~" + HL7Message);
 
@@ -286,9 +273,9 @@ namespace HL7SenderWinForm2015
                 int received = networkStream.Read(buffer, 0, buffer.Length);
                 var serverMessage = Encoding.UTF8.GetString(buffer, 0, received);
                 /*string serverMessage = ReadMessage(sslStream)*/
-                ;
-                _log.InfoFormat("ACK message from server :{0}" , (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : "No ACK"));
-                MessageBox.Show("ACK message from server : " + (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : "No ACK"));
+                
+                _log.InfoFormat("ACK message from server :{0}" , (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : NoACK));
+                MessageBox.Show("ACK message from server : " + (!string.IsNullOrWhiteSpace(serverMessage) ? serverMessage.Remove(0, 1) : NoACK));
             }
            
             catch (Exception e)
@@ -318,11 +305,10 @@ namespace HL7SenderWinForm2015
 
             return messageData.ToString();
         }
-        public X509Certificate2 Load(out X509Certificate2 x509_2)
+        public X509Certificate2 Load()
         {
             _log.Info("Start Loading the SSL Certificate");
 
-            x509_2 = null;
             X509Certificate2 x509Certificate = null;
             
             X509Store store = null;
@@ -353,27 +339,18 @@ namespace HL7SenderWinForm2015
 
             else
             {
-                throw new Exception("Store Name is not specified");
+                throw new ArgumentNullException("Store Name is not specified");
             }
 
             string thumbPrint = StripTheSpacesAndMakeItUpper(ConfigurationManager.AppSettings["pfxthumbPrint"]);
             store.Open(OpenFlags.ReadOnly);
-            var certCollection = store.Certificates;
-            IEnumerable<X509Certificate2> certificate2s = store.Certificates.OfType<X509Certificate2>().Where(x => x.Thumbprint == thumbPrint);
-            foreach (var x509 in certCollection)
-            {
-                if (x509.Thumbprint.Equals(thumbPrint))
-                {
-                    x509Certificate = x509;
-                    x509_2 = x509;
-                    break;
-                }
-            }
-
+            
+            x509Certificate = store.Certificates.OfType<X509Certificate2>().Where(x => x.Thumbprint == thumbPrint).FirstOrDefault();
+            
             store.Close();
             return x509Certificate;
         }
-        private string StripTheSpacesAndMakeItUpper(string thumbPrint)
+        private static string StripTheSpacesAndMakeItUpper(string thumbPrint)
         {
             if (!string.IsNullOrWhiteSpace(thumbPrint))
             {

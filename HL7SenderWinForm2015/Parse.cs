@@ -87,15 +87,13 @@ namespace HL7SenderWinForm2015
         private static string removeSegments(string msg, IEnumerable<string> segmentsToFilter, out List<string> filteredSegments)
         {
             filteredSegments = new List<string>();
-            foreach (var seg in segmentsToFilter)
+
+            foreach (var seg in segmentsToFilter.Where(x => msg.Contains(CR + x)))
             {
-                if (msg.Contains(CR + seg))
-                {
-                    string[] lines = msg.Split(new string[] { CR.ToString() }, StringSplitOptions.None).ToArray();
-                    var filteredLines = lines.Where(x => x.Length > 3 && !x.Substring(0, 4).Contains(seg));
-                    msg = string.Join(CR.ToString(), filteredLines.ToArray());
-                    filteredSegments.Add(seg);
-                }
+                string[] lines = msg.Split(new string[] { CR.ToString() }, StringSplitOptions.None).ToArray();
+                var filteredLines = lines.Where(x => x.Length > 3 && !x.Substring(0, 4).Contains(seg));
+                msg = string.Join(CR.ToString(), filteredLines.ToArray());
+                filteredSegments.Add(seg);
             }
             return msg;
         }
@@ -138,7 +136,7 @@ namespace HL7SenderWinForm2015
         private const string MSG_FOOD_ALLERGY = "ADT_A60";
         private const string ADT_60 = "ADT^A60";
     }
-    public class ADTMessage
+    public class AdtMessage
     {
         public IMessage Msg { get; set; }
         public long MsgSequence { get; set; }
