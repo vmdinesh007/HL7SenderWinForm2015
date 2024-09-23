@@ -81,7 +81,6 @@ namespace HL7SenderWinForm2015
                 string msHL7 = Regex.Replace(txtHL7.Text, @"\r\n|\n\r|\n|\r", "\r");
 
                 _log.Info("Start parsing the Message");
-                PipeParser pp = new PipeParser();
                 _log.Info("End parsing the Message");
 
                 bool sslcondition = chkBxSSL.Checked;
@@ -350,7 +349,7 @@ namespace HL7SenderWinForm2015
             string thumbPrint = StripTheSpacesAndMakeItUpper(txtThumbprint.Text);
             store.Open(OpenFlags.ReadOnly);
             
-            x509Certificate = store.Certificates.OfType<X509Certificate2>().Where(x => x.Thumbprint == thumbPrint).FirstOrDefault();
+            x509Certificate = store.Certificates.OfType<X509Certificate2>().FirstOrDefault(x => x.Thumbprint == thumbPrint);
             
             store.Close();
             return x509Certificate;
