@@ -28,13 +28,16 @@ namespace HL7SenderWinForm2015
         
         private static readonly ILog _log = log4net.LogManager.GetLogger("RollingFileAppender");
         private static string VT = "\v";
-        private NetworkStream networkStream;
         private const string NoACK = "No ACK";
+        private NetworkStream networkStream;
 
         X509Certificate2 clientCertificate = null;
         public Form1()
         {
             InitializeComponent();
+            this.lblLogPath.Hide();
+            this.txtLogPath.Hide();
+            this.ddlstCertDir.SelectedIndex = 0;
         }
 
         public static bool ValidateServerCertificate(
@@ -60,15 +63,16 @@ namespace HL7SenderWinForm2015
         }
 
         private void btnSend_Click(object sender, EventArgs e)
-        {
+         {
             //Setting the LOG Path
-            if (ConfigurationManager.AppSettings["CustomPath"] == "True" && ConfigurationManager.AppSettings["CustomLogPath"] != "")
+            if (rdbtnCustLogPath.Checked && txtLogPath.Text != "..\\Path")
             {
-                log4net.GlobalContext.Properties["LogFileName"] = ConfigurationManager.AppSettings["CustomLogPath"];
+                log4net.GlobalContext.Properties["LogFileName"] = string.Concat(txtLogPath.Text,"\\log");
             }
             else
             {
-                log4net.GlobalContext.Properties["LogFileName"] = Environment.CurrentDirectory + "\\Log\\log"; //log file path
+                log4net.GlobalContext.Properties["LogFileName"] = string.Concat(Environment.CurrentDirectory, "\\Log\\log"); //log file path
+
             }
             log4net.Config.XmlConfigurator.Configure();
 
@@ -80,7 +84,7 @@ namespace HL7SenderWinForm2015
                 PipeParser pp = new PipeParser();
                 _log.Info("End parsing the Message");
 
-                bool sslcondition = bool.Parse(ConfigurationManager.AppSettings["SSL"]);
+                bool sslcondition = chkBxSSL.Checked;
 
                 if (sslcondition)
                 {
@@ -103,10 +107,11 @@ namespace HL7SenderWinForm2015
             try
             {
                 //Socket Sender 
-                string srcAddress = ConfigurationManager.AppSettings["SRC"];
-                int index = int.Parse(ConfigurationManager.AppSettings["IPAddressIndex"]);
+                string srcAddress = txtSRC.Text.Trim();
+                int index = int.Parse(txtIPIndex.Text.Trim());
+
                 Uri src = new Uri(srcAddress);
-                int Port = int.Parse(ConfigurationManager.AppSettings["ServerPort"]);
+                int Port = int.Parse(txtPort.Text);
 
                 IPAddress[] ipAddresses = Dns.GetHostAddresses(src.Host);
                 IPAddress ipAddr = ipAddresses[index];
@@ -141,9 +146,9 @@ namespace HL7SenderWinForm2015
                 sslStream.ReadTimeout = 20000;
                 sslStream.WriteTimeout = 20000;
 
-                string host = ConfigurationManager.AppSettings["HostName"];// "G07SGXNFAP11083"; //Need to move to config file
+                string host = txtHostname.Text;
 
-                bool twoWaySSL = bool.Parse(ConfigurationManager.AppSettings["2WaySSL"]);
+                bool twoWaySSL = rdbtnTwoWaySSL.Checked;
 
                 if (twoWaySSL)
                 {
@@ -312,7 +317,7 @@ namespace HL7SenderWinForm2015
             X509Certificate2 x509Certificate = null;
             
             X509Store store = null;
-            string certDir = System.Configuration.ConfigurationManager.AppSettings["CertDir"];
+            string certDir = ddlstCertDir.SelectedItem.ToString();
 
             if (!string.IsNullOrWhiteSpace(certDir))
             {
@@ -342,7 +347,7 @@ namespace HL7SenderWinForm2015
                 throw new ArgumentNullException("Store Name is not specified");
             }
 
-            string thumbPrint = StripTheSpacesAndMakeItUpper(ConfigurationManager.AppSettings["pfxthumbPrint"]);
+            string thumbPrint = StripTheSpacesAndMakeItUpper(txtThumbprint.Text);
             store.Open(OpenFlags.ReadOnly);
             
             x509Certificate = store.Certificates.OfType<X509Certificate2>().Where(x => x.Thumbprint == thumbPrint).FirstOrDefault();
@@ -359,6 +364,52 @@ namespace HL7SenderWinForm2015
             return thumbPrint;
         }
 
+        private void rdbtnLog_CheckedChanged(object sender, EventArgs e)
+        {
+            if(rdbtnDefLogPath.Checked)
+            {
+                lblLogPath.Hide();
+                txtLogPath.Hide();
+            }
+            else
+            {
+                lblLogPath.Show();
+                txtLogPath.Show();
+            }
+        }
 
+        private void chkBxSSL_CheckedChanged(object sender, EventArgs e)
+        {
+            if(!chkBxSSL.Checked)
+            {
+                grpBxSSL.Hide();
+                grpBxCertDetails.Hide();
+            }
+            else
+            {
+                grpBxSSL.Show();
+                grpBxCertDetails.Show();
+            }
+        }
+
+        private void txtPort_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar)) 
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void rdbtnSSL_CheckedChanged(object sender, EventArgs e)
+        {
+            if(rdbtnOneWaySSL.Checked)
+            {
+                grpBxCertDetails.Hide();
+            }
+            else
+            {
+                grpBxCertDetails.Show();
+            }
+        }
     }
 }
