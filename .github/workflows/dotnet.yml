@@ -26,7 +26,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
         
     - name: Install WiX
-      run: dotnet tool install --global wix --version 3.11
+      run: dotnet tool install --global wix --version 3.14.1
         
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
