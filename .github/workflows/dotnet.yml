@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: 'windows-latest'
+    runs-on: ['windows-latest','ubuntu-latest']
     steps:
     - uses: actions/checkout@v4
     - name: Setup MSBuild
@@ -28,10 +28,6 @@ jobs:
     - name: Install WiX
       run: dotnet tool install --global wix
         
-  build-test:
-    runs-on: 'ubuntu-latest'
-    steps:
-    - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
