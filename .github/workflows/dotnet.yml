@@ -28,9 +28,10 @@ jobs:
     - name: Install WiX
       run: dotnet tool install --global wix
         
-    - name: Build WiX on Windows
-      run: wix build .\nexus.wxs
-      
+  build-test:
+    runs-on: 'ubuntu-latest'
+    steps:
+    - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
