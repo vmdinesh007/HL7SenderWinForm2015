@@ -12,10 +12,34 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: [ 'ubuntu-latest', 'windows-latest']
 
     steps:
     - uses: actions/checkout@v4
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+      
+    - name: Set path for candle and light
+      run: echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" >> $GITHUB_PATH
+      shell: bash
+        
+    - name: Restore dependencies
+      run: nuget restore i2V_Patch_Applier.sln
+
+    - name: Build application
+      run: msbuild i2vPatchApplier/i2vPatchApplier.csproj
+      
+    - name: Build WiX Project
+      run: msbuild PatchApplierSetup/PatchApplierSetup.wixproj
+        
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+        
+    - name: Install WiX
+      run: dotnet tool install --global wix
+        
+    - name: Build WiX on Windows
+      run: wix build .\nexus.wxs
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
