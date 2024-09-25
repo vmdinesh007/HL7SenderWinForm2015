@@ -24,9 +24,6 @@ jobs:
 
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
-
-    - name: Restore dependencies
-      run: dotnet restore D:\a\HL7SenderWinForm2015\HL7SenderWinForm2015
       
     - name: Build
       run: dotnet build --no-restore
