@@ -25,8 +25,8 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
       
-    - name: Build
-      run: dotnet build --no-restore
+    - name: build HL7 Main project
+      run: msbuild D:\a\HL7SenderWinForm2015\HL7SenderWinForm2015\HL7SenderWinForm2015\HL7SenderWinForm2015.csproj
       
     - name: build wix project
       run: msbuild D:\a\HL7SenderWinForm2015\HL7SenderWinForm2015\HL7_Setup\HL7_Setup.wixproj 
