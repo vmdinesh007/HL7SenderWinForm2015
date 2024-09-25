@@ -24,16 +24,23 @@ jobs:
 
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
-        
+    
+    - name: Build
+      run: dotnet build --no-restore
+      
     - name: build wix project
-      run: msbuild D:\a\HL7SenderWinForm2015\HL7SenderWinForm2015\HL7_Setup\HL7_Setup.wixproj        
+      run: msbuild D:\a\HL7SenderWinForm2015\HL7SenderWinForm2015\HL7_Setup\HL7_Setup.wixproj 
+      
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+        
     - name: Restore dependencies
       run: dotnet restore
+      
     - name: Build
       run: dotnet build --no-restore
+      
     - name: Test
       run: dotnet test --no-build --verbosity normal
