@@ -26,7 +26,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
         
     - name: Install WiX
-      run: dotnet add package wix --version 3.14.1
+      run: dotnet add D:\a\HL7SenderWinForm2015\HL7SenderWinForm2015\HL7_Setup add package wix --version 3.14.1
         
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
