@@ -15,29 +15,15 @@ jobs:
     runs-on: 'windows-latest'
     steps:
     - uses: actions/checkout@v4
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1
-      
-    - name: Set path for candle and light
-      run: echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" >> $GITHUB_PATH
-      shell: bash
-
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.1
-      
-    - name: build HL7 Main project
-      run: msbuild D:\a\HL7SenderWinForm2015\HL7SenderWinForm2015\HL7SenderWinForm2015\HL7SenderWinForm2015.csproj
-      
-    - name: build wix project
-      run: msbuild D:\a\HL7SenderWinForm2015\HL7SenderWinForm2015\HL7_Setup\HL7_Setup.wixproj 
-      
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 8.0.x
-
-    - name: Build
-      run: dotnet build --no-restore
+        dotnet-version: '6.x'
+        cache: true
+    - name: Install Log4net
+      run: dotnet add package log4net --version 3.0.0
+    - name: Install wix
+      run: dotnet add package wix --version 3.14.1
       
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      
+    
