@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install Log4net
-      run: dotnet add D:\a\HL7SenderWinForm2015\HL7SenderWinForm2015\HL7SenderWinForm2015 package log4net --version 3.0.0
+      run: dotnet add D:\a\HL7SenderWinForm2015\HL7SenderWinForm2015\HL7SenderWinForm2015 package log4net --version 2.0.15
     - name: Install wix
       run: dotnet add package wix --version 3.14.1
       
