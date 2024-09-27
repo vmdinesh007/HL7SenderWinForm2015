@@ -40,12 +40,8 @@
     <Reference Include="log4net, Version=2.0.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.15\lib\net45\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="NHapi.Base, Version=2.4.0.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\nHapi.2.4\lib\NHapi.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="NHapi.Model.V23">
-      <HintPath>..\packages\nHapi.2.4\lib\NHapi.Model.V23.dll</HintPath>
+    <Reference Include="NHapi.Base, Version=3.2.0.0, Culture=neutral, PublicKeyToken=d0d8ea960a3440eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\nhapi.base.3.2.0\lib\net35\NHapi.Base.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

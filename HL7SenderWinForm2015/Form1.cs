@@ -30,6 +30,7 @@ namespace HL7SenderWinForm2015
         private static string VT = "\v";
         private const string NoACK = "No ACK";
         private NetworkStream networkStream;
+        IMessage msg;
 
         X509Certificate2 clientCertificate = null;
         public Form1()
@@ -81,6 +82,8 @@ namespace HL7SenderWinForm2015
                 string msHL7 = Regex.Replace(txtHL7.Text, @"\r\n|\n\r|\n|\r", "\r");
 
                 _log.Info("Start parsing the Message");
+                PipeParser pp = new PipeParser();
+                msg = pp.Parse(Parse.removeNKwDTM(msHL7));
                 _log.Info("End parsing the Message");
 
                 bool sslcondition = chkBxSSL.Checked;

@@ -1,7 +1,6 @@
 ﻿using log4net;
 using NHapi.Base.Model;
 using NHapi.Base.Parser;
-using NHapi.Model.V23.Message;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
