@@ -1,70 +1,68 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
     <Fragment>
         <DirectoryRef Id="INSTALLFOLDER">
-            <Component Id="cmp92CDF83408E5615434E15613772F5E7C" Guid="{13706A99-B622-4340-9ABA-38B7070DA64E}">
-                <File Id="filC997D98DF3511F9C6B2CEC2BC43495C3" KeyPath="yes" Source="$(var.BasePath)\(null).log" />
+            <Component Id="cmpnj8I432TMRsdeBuSP0FFoSFLIPY" Guid="{4D32A4ED-D48B-4EC0-BB57-8ABCBDD11C3F}">
+                <File Id="filXUMwul3TsPfwUC4znLwldF1Dc.g" KeyPath="yes" Source="$(var.BasePath)\(null).log" />
             </Component>
-            <Component Id="cmpC1D9E0844D2E4AFB937FF4F217485F9B" Guid="{FA79BFFF-B3DF-48C5-9A34-62B61EB9FDF6}">
-                <File Id="filE22341AF2206CB60356461A056123EE7" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.exe" />
+            <Component Id="cmpQZ1lZACf7qUczPUzYJWwRGkODhI" Guid="{9368BDE2-946D-45DF-8849-5F671F20F40A}">
+                <File Id="filDVbM1dcGjYacSNb9HHoM0T0m2EM" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.exe" />
             </Component>
-            <Component Id="cmpEFAB68C7CD45D5422D0973F740293912" Guid="{A4BC7ED2-6A4F-489E-9E3B-2FCE665EB1A8}">
-                <File Id="filFEDCE752CEEB47ED4DD897B32B91D60D" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.exe.config" />
-                <util:XmlFile Id="XmlHostName" Action="setValue" Permanent="yes" File="[#filFEDCE752CEEB47ED4DD897B32B91D60D]" ElementPath="//configuration/appSettings/add[\[]@key='HostName'[\]]" Value="[HOSTNAME]" Name="value" SelectionLanguage="XSLPattern" Sequence="1" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" />
-                <util:XmlFile Id="XmlServerPort" Action="setValue" Permanent="yes" File="[#filFEDCE752CEEB47ED4DD897B32B91D60D]" ElementPath="//configuration/appSettings/add[\[]@key='ServerPort'[\]]" Value="[SERVERPORT]" Name="value" SelectionLanguage="XSLPattern" Sequence="1" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" />
-                <util:XmlFile Id="XmlPFXThumbPrint" Action="setValue" Permanent="yes" File="[#filFEDCE752CEEB47ED4DD897B32B91D60D]" ElementPath="//configuration/appSettings/add[\[]@key='pfxthumbPrint'[\]]" Value="[PFXTHUMBPRINT]" Name="value" SelectionLanguage="XSLPattern" Sequence="1" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" />
-                <util:XmlFile Id="XmlSRC" Action="setValue" Permanent="yes" File="[#filFEDCE752CEEB47ED4DD897B32B91D60D]" ElementPath="//configuration/appSettings/add[\[]@key='SRC'[\]]" Value="[SRC]" Name="value" SelectionLanguage="XSLPattern" Sequence="1" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" />
-                <util:XmlFile Id="XmlIPAddressIndex" Action="setValue" Permanent="yes" File="[#filFEDCE752CEEB47ED4DD897B32B91D60D]" ElementPath="//configuration/appSettings/add[\[]@key='IPAddressIndex'[\]]" Value="[IPINDEX]" Name="value" SelectionLanguage="XSLPattern" Sequence="1" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" />
+            <Component Id="cmpIVv5KTgmOzUBBlhz485W7_51nz8" Guid="{7E3B73BD-A718-46FC-AC2A-67198F8E9070}">
+                <File Id="fil6ySZUnfNWTTqlyru8m2tot7aNdQ" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.exe.config" />
             </Component>
-            <Component Id="cmp37F78D31E5AD332A9F03F3AD99CB1E5E" Guid="{FB7C0DAC-C358-41BB-B5AF-004599D3CD7F}">
-                <File Id="filABF4C773A723BD0725C67299C4B2F299" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.pdb" />
+            <Component Id="cmpJ3myLQ46STCiiAPtYbMMKHGACvc" Guid="{34E3EF38-8F4E-4973-98DE-C0EC0AC4B89A}">
+                <File Id="filWjWoyThXT_QWi9Jb6D.tE4e5s_g" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.pdb" />
             </Component>
-            <Component Id="cmp6E21552E08BAE305FCD785CBB0E6F67D" Guid="{1CA3B1E6-BB0D-425B-BD07-CC64D59783C9}">
-                <File Id="fil412B29ADB18DD558D515AECE8A15E1CA" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.vshost.exe" />
+            <Component Id="cmp3yTr3n8p4DVCy3ds5z_N7Bm3Yjo" Guid="{172F345C-2353-4160-9930-43C537CEBC5A}">
+                <File Id="filtwwZtfLkBOYG5BW49fuLqcqWq1w" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.vshost.exe" />
             </Component>
-            <Component Id="cmp60035D4873E82CAA65E603F75A81397D" Guid="{5486C73C-6FB9-4D2F-BFE2-2BDC15FFA5B1}">
-                <File Id="filD87F2BCFD96F1682A224E1DD1774C613" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.vshost.exe.config" />
+            <Component Id="cmp5j4eAReubztJYk9aEmxnyarblFQ" Guid="{B1EDA169-0892-456E-BA78-AB66B3338755}">
+                <File Id="filcoxFs.rmHoFapdVEmYBNHISvLOA" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.vshost.exe.config" />
             </Component>
-            <Component Id="cmp6F1BB5F1BE41D46AE9A91FC55C1D51F5" Guid="{79CA46BB-69F6-4FE5-B9DF-D19112927005}">
-                <File Id="fil7EF26304A2947C440B02BA54251B4092" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.vshost.exe.config.bak" />
+            <Component Id="cmpUqPNBBeyH8UUM_I7epIgw3d2a.w" Guid="{C6BD3D64-5F98-415D-820D-4B9AA9AE647C}">
+                <File Id="filfCk2VyK_etVfQNvLs74zRi9aoIM" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.vshost.exe.config.bak" />
             </Component>
-            <Component Id="cmp3B34260CF4FF7B33D4866B96F08889E9" Guid="{78C5227B-5021-47C8-9AAD-FD566A48DEB0}">
-                <File Id="filA5EDA956E250865629D8F513F2D759FA" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.vshost.exe.manifest" />
+            <Component Id="cmpKSIGDjIRCQkFb9fZnBKG1xTvPDg" Guid="{30717F20-1A5E-43E6-B5E5-54C4EAA8F60B}">
+                <File Id="filrQStmNFHMfRkkd.gxtnfR1jnlD4" KeyPath="yes" Source="$(var.BasePath)\HL7SenderWinForm2015.vshost.exe.manifest" />
             </Component>
-            <Component Id="cmp13D58469BCB864EB53214ED46E622188" Guid="{5F69438B-8E43-446B-85AC-181D763B4130}">
-                <File Id="fil28F7A9478894C77C5F6C2A95DAA4B459" KeyPath="yes" Source="$(var.BasePath)\log4net.dll" />
+            <Component Id="cmpm5LfEoqynzWMfObI5magU.UzgOQ" Guid="{DFCBE33D-3E7D-4908-A927-6EB918D57153}">
+                <File Id="film1PYtLkp8EIBGDg4GxuATGsGZHE" KeyPath="yes" Source="$(var.BasePath)\log4net.dll" />
             </Component>
-            <Component Id="cmp742785C9A7B88BE6B2E81C2322E3D2EE" Guid="{F960E550-9B09-4565-B802-C2D27C94D2E0}">
-                <File Id="filA307C00D897BECB908C510DE71A3AD29" KeyPath="yes" Source="$(var.BasePath)\log4net.xml" />
+            <Component Id="cmpJtZnsrIrU8fRGHINOJ4Smko4gE0" Guid="{2444A62D-A2B1-438F-90DA-E1B4564A6574}">
+                <File Id="filM949i12HuzD0codCxUMbHJ6St.g" KeyPath="yes" Source="$(var.BasePath)\log4net.xml" />
             </Component>
-            <Component Id="cmp36ADCC7C7F9082723349FB99FC4FCB94" Guid="{80577FE5-9824-4D81-B43C-9E7B1AF957D2}">
-                <File Id="fil7C2B3E1C136901B5AD0E908A0A23669A" KeyPath="yes" Source="$(var.BasePath)\NHapi.Base.dll" />
+            <Component Id="cmpe8xupnGgWTjCSJyMxo1F.4858uk" Guid="{477404BE-D3B7-4B15-A6B6-BE61E330EB7D}">
+                <File Id="filXIcMMiVBkMeXXCN7m6oAlt6nR1w" KeyPath="yes" Source="$(var.BasePath)\NHapi.Base.dll" />
             </Component>
-            <Component Id="cmp2B9D8161CA39CCBD738F072E8244C711" Guid="{D31CB864-4F52-4879-BCAF-D69C774BEE62}">
-                <File Id="filC3184CED8C9B8DC275C98F256DC44EE8" KeyPath="yes" Source="$(var.BasePath)\NHapi.Model.V23.dll" />
+            <Component Id="cmpHyHOTPkGVNraD_3hFWTgv6MROs8" Guid="{D0F42E62-D0EA-463E-A390-0B75F17DF227}">
+                <File Id="filNXSqmplCZa_TLMogg2cOdoNr4JY" KeyPath="yes" Source="$(var.BasePath)\NHapi.Base.xml" />
             </Component>
-            <Directory Id="dirC40AC364B5E0B46638A4945083D7F012" Name="Log">
-                <Component Id="cmp2A3EF4B8B7D9A131EF987AB65DDC5CF4" Guid="{B3BFAB4A-A1A1-44F9-BA96-6723A817C9FB}">
-                    <File Id="filA01ED10481E0E7444FAC39D0C770024A" KeyPath="yes" Source="$(var.BasePath)\Log\log.log" />
+            <Component Id="cmphE7sGn.6.RG2uNJtWFRHk2P1Udc" Guid="{C2DE2510-69B7-420D-A1AE-B41D014A93A5}">
+                <File Id="filOeC7KI2e9R0aAxgK5d4EZqLLccc" KeyPath="yes" Source="$(var.BasePath)\NHapi.Model.V23.dll" />
+            </Component>
+            <Directory Id="dirzJX9Wj.uJvmfG6CMzyf2rXrp4WQ" Name="Log">
+                <Component Id="cmpO9GIFsBqr3kHHuEcMn0cyD1LPw0" Guid="{D1822435-321E-4B4E-8B8B-69451981CA6D}">
+                    <File Id="fil.aNxgsJ77IObrlOtYkLqmI_lUp4" KeyPath="yes" Source="$(var.BasePath)\Log\log.log" />
                 </Component>
             </Directory>
         </DirectoryRef>
     </Fragment>
     <Fragment>
         <ComponentGroup Id="PublishedComponents">
-            <ComponentRef Id="cmp92CDF83408E5615434E15613772F5E7C" />
-            <ComponentRef Id="cmpC1D9E0844D2E4AFB937FF4F217485F9B" />
-            <ComponentRef Id="cmpEFAB68C7CD45D5422D0973F740293912" />
-            <ComponentRef Id="cmp37F78D31E5AD332A9F03F3AD99CB1E5E" />
-            <ComponentRef Id="cmp6E21552E08BAE305FCD785CBB0E6F67D" />
-            <ComponentRef Id="cmp60035D4873E82CAA65E603F75A81397D" />
-            <ComponentRef Id="cmp6F1BB5F1BE41D46AE9A91FC55C1D51F5" />
-            <ComponentRef Id="cmp3B34260CF4FF7B33D4866B96F08889E9" />
-            <ComponentRef Id="cmp13D58469BCB864EB53214ED46E622188" />
-            <ComponentRef Id="cmp742785C9A7B88BE6B2E81C2322E3D2EE" />
-            <ComponentRef Id="cmp36ADCC7C7F9082723349FB99FC4FCB94" />
-            <ComponentRef Id="cmp2B9D8161CA39CCBD738F072E8244C711" />
-            <ComponentRef Id="cmp2A3EF4B8B7D9A131EF987AB65DDC5CF4" />
+            <ComponentRef Id="cmpnj8I432TMRsdeBuSP0FFoSFLIPY" />
+            <ComponentRef Id="cmpQZ1lZACf7qUczPUzYJWwRGkODhI" />
+            <ComponentRef Id="cmpIVv5KTgmOzUBBlhz485W7_51nz8" />
+            <ComponentRef Id="cmpJ3myLQ46STCiiAPtYbMMKHGACvc" />
+            <ComponentRef Id="cmp3yTr3n8p4DVCy3ds5z_N7Bm3Yjo" />
+            <ComponentRef Id="cmp5j4eAReubztJYk9aEmxnyarblFQ" />
+            <ComponentRef Id="cmpUqPNBBeyH8UUM_I7epIgw3d2a.w" />
+            <ComponentRef Id="cmpKSIGDjIRCQkFb9fZnBKG1xTvPDg" />
+            <ComponentRef Id="cmpm5LfEoqynzWMfObI5magU.UzgOQ" />
+            <ComponentRef Id="cmpJtZnsrIrU8fRGHINOJ4Smko4gE0" />
+            <ComponentRef Id="cmpe8xupnGgWTjCSJyMxo1F.4858uk" />
+            <ComponentRef Id="cmpHyHOTPkGVNraD_3hFWTgv6MROs8" />
+            <ComponentRef Id="cmphE7sGn.6.RG2uNJtWFRHk2P1Udc" />
+            <ComponentRef Id="cmpO9GIFsBqr3kHHuEcMn0cyD1LPw0" />
         </ComponentGroup>
     </Fragment>
 </Wix>

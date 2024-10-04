@@ -1,6 +1,6 @@
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
+xmlns:wix="http://wixtoolset.org/schemas/v4/wxs">
 <xsl:output method="xml" indent="yes" cdata-section-elements="wix:Condition"/>
 <xsl:strip-space elements="*" />
 
@@ -13,7 +13,7 @@ xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
 <xsl:template match='wix:Component[@Id and (@Id="cmpEFAB68C7CD45D5422D0973F740293912")]'>
     <xsl:copy>
 		<xsl:apply-templates select="@*|node()"/>
-      	<xsl:element name="util:XmlFile" namespace="http://schemas.microsoft.com/wix/UtilExtension">	
+      	<xsl:element name="util:XmlFile" namespace="http://wixtoolset.org/schemas/v4/wxs/util">	
               <xsl:attribute name="Id">XmlHostName</xsl:attribute>
               <xsl:attribute name="Action">setValue</xsl:attribute>
               <xsl:attribute name="Permanent">yes</xsl:attribute>
@@ -24,7 +24,7 @@ xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
               <xsl:attribute name="SelectionLanguage">XSLPattern</xsl:attribute>
               <xsl:attribute name="Sequence">1</xsl:attribute>  		
       	</xsl:element>
-		<xsl:element name="util:XmlFile" namespace="http://schemas.microsoft.com/wix/UtilExtension">	
+		<xsl:element name="util:XmlFile" namespace="http://wixtoolset.org/schemas/v4/wxs/util">	
               <xsl:attribute name="Id">XmlServerPort</xsl:attribute>
               <xsl:attribute name="Action">setValue</xsl:attribute>
               <xsl:attribute name="Permanent">yes</xsl:attribute>
@@ -35,7 +35,7 @@ xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
               <xsl:attribute name="SelectionLanguage">XSLPattern</xsl:attribute>
               <xsl:attribute name="Sequence">1</xsl:attribute>  		
       	</xsl:element>
-		<xsl:element name="util:XmlFile" namespace="http://schemas.microsoft.com/wix/UtilExtension">	
+		<xsl:element name="util:XmlFile" namespace="http://wixtoolset.org/schemas/v4/wxs/util">	
               <xsl:attribute name="Id">XmlPFXThumbPrint</xsl:attribute>
               <xsl:attribute name="Action">setValue</xsl:attribute>
               <xsl:attribute name="Permanent">yes</xsl:attribute>
@@ -46,7 +46,7 @@ xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
               <xsl:attribute name="SelectionLanguage">XSLPattern</xsl:attribute>
               <xsl:attribute name="Sequence">1</xsl:attribute>  		
       	</xsl:element>		
-		<xsl:element name="util:XmlFile" namespace="http://schemas.microsoft.com/wix/UtilExtension">	
+		<xsl:element name="util:XmlFile" namespace="http://wixtoolset.org/schemas/v4/wxs/util">	
               <xsl:attribute name="Id">XmlSRC</xsl:attribute>
               <xsl:attribute name="Action">setValue</xsl:attribute>
               <xsl:attribute name="Permanent">yes</xsl:attribute>
@@ -57,7 +57,7 @@ xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
               <xsl:attribute name="SelectionLanguage">XSLPattern</xsl:attribute>
               <xsl:attribute name="Sequence">1</xsl:attribute>  		
       	</xsl:element>	
-		<xsl:element name="util:XmlFile" namespace="http://schemas.microsoft.com/wix/UtilExtension">	
+		<xsl:element name="util:XmlFile" namespace="http://wixtoolset.org/schemas/v4/wxs/util">	
               <xsl:attribute name="Id">XmlIPAddressIndex</xsl:attribute>
               <xsl:attribute name="Action">setValue</xsl:attribute>
               <xsl:attribute name="Permanent">yes</xsl:attribute>

@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
 	<Fragment>
 		<!--Product Components-->
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
 
 			<!--Shortcut to application-->
-			<ComponentRef Id="MainAppShortcut"/>
-			<ComponentRef Id="ApplicationShortcutDesktop"/>
+			<ComponentRef Id="MainAppShortcut" />
+			<ComponentRef Id="ApplicationShortcutDesktop" />
 
 		</ComponentGroup>
 		<!--Installed Files-->
@@ -14,41 +13,26 @@
 
 			<!--Component Files-->
 			<Component Id="MainAppShortcut" Guid="{B2E182E6-3759-42BA-9CB3-F9D69CEFE9C1}">
-				<Shortcut Id="MainAppShortcut"
-						  Name="!(loc.ProductName)"
-						  Target="[INSTALLFOLDER]HL7SenderWinForm2015.exe"
-						  Directory="InstallProgramMenuFolder"
-						  WorkingDirectory="INSTALLFOLDER"
-						  Icon="icon.ico"/>
+				<Shortcut Id="MainAppShortcut" Name="!(loc.ProductName)" Target="[INSTALLFOLDER]HL7SenderWinForm2015.exe" Directory="InstallProgramMenuFolder" WorkingDirectory="INSTALLFOLDER" Icon="icon.ico" />
 
 				<!--Unique Key for component shortcut-->
-				<RegistryValue Id="RegShortcutKey" Root="HKCU" Key="SOFTWARE\!(loc.InstallFolderName)" Name="Shortcut" Value="1" Type="integer" KeyPath="yes"/>
+				<RegistryValue Id="RegShortcutKey" Root="HKCU" Key="SOFTWARE\!(loc.InstallFolderName)" Name="Shortcut" Value="1" Type="integer" KeyPath="yes" />
 
 				<!--Remove Start Menu Icon-->
-				<RemoveFolder Id="RemoveStartMenu" Directory="InstallProgramMenuFolder" On="uninstall"/>
+				<RemoveFolder Id="RemoveStartMenu" Directory="InstallProgramMenuFolder" On="uninstall" />
 			</Component>
 
 		</DirectoryRef>
 
-		<DirectoryRef Id="DesktopFolder" >
+		<StandardDirectory Id="DesktopFolder">
 			<Component Id="ApplicationShortcutDesktop" Guid="{3C1BE671-2FA6-4DAF-949F-8B7F6D44BF78}">
-				<Shortcut Id="ApplicationDesktopShortcut"
-					  Name="!(loc.ProductName)"
-					  Description="!(loc.ProductDescription)"
-					  Target="[INSTALLFOLDER]HL7SenderWinForm2015.exe"
-					  WorkingDirectory="INSTALLFOLDER"
-					  Icon="icon.ico"/>
+				<Shortcut Id="ApplicationDesktopShortcut" Name="!(loc.ProductName)" Description="!(loc.ProductDescription)" Target="[INSTALLFOLDER]HL7SenderWinForm2015.exe" WorkingDirectory="INSTALLFOLDER" Icon="icon.ico" />
 
 				<!--Unique Key for component shortcut-->
-				<RegistryValue Root="HKCU"
-							   Key="Software\MyCompany\DSapp"
-							   Name="installed"
-							   Type="integer"
-							   Value="1"
-							   KeyPath="yes" />
+				<RegistryValue Root="HKCU" Key="Software\MyCompany\DSapp" Name="installed" Type="integer" Value="1" KeyPath="yes" />
 				<!--<RegistryValue Id="RegShortcutKey" Root="HKCU" Key="SOFTWARE\!(loc.InstallFolderName)" Name="Shortcut" Value="1" Type="integer" KeyPath="yes"/>-->
 
 			</Component>
-		</DirectoryRef>
+		</StandardDirectory>
 	</Fragment>
 </Wix>
