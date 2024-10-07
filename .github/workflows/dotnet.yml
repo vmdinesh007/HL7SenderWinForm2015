@@ -24,7 +24,8 @@ jobs:
       uses: NuGet/setup-nuget@v2.0.0
       
     - name: Restore nuget packages
-      run: nuget restore HL7SenderWinForm2015.sln
+      run: nuget restore HL7SenderWinForm2015.csproj
+      working-directory: HL7SenderWinForm2015
 
     - name: MS Build
       run: msbuild HL7SenderWinForm2015.sln
