@@ -12,35 +12,31 @@ on:
 jobs:
   build:
 
-    runs-on: 'windows-latest'
+    runs-on: windows-latest
+
     steps:
     - uses: actions/checkout@v4
+
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
       
-    - name: Set path for candle and light
-      run: echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" >> $GITHUB_PATH
-      shell: bash
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v2.0.0
 
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.1
-
-    - name: Restore dependencies
-      run: dotnet restore D:\a\HL7SenderWinForm2015\HL7SenderWinForm2015
+    - name: Restore nuget packages
+      run: nuget restore HL7SenderWinForm2015.sln
+    
+    - name: MS Build
+      run: msbuild HL7SenderWinForm2015.sln
       
-    - name: Build
-      run: dotnet build --no-restore
-      
-    - name: build wix project
-      run: msbuild D:\a\HL7SenderWinForm2015\HL7SenderWinForm2015\HL7_Setup\HL7_Setup.wixproj 
-      
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+    - name: Upload Wix MSI Build Artifact
+      uses: actions/upload-artifact@v3.2.1-node20
       with:
-        dotnet-version: 8.0.x
-
-    - name: Build
-      run: dotnet build --no-restore
-      
+        name: HL7-Installer
+        path: HL7SenderWinForm2015/HL7_Setup/bin/x64/Debug/en-US
+    
     - name: Test
       run: dotnet test --no-build --verbosity normal
+      
+      
+    
