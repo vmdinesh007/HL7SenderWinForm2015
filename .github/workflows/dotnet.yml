@@ -23,14 +23,14 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v2.0.0
       
-    - name: Restore nuget packages
-      run: nuget restore HL7SenderWinForm2015.csproj
-      working-directory: HL7SenderWinForm2015
+    - name: restore-nuget-packages
+	    uses: IT-Service/restore-nuget-packages@v1.0.2
+	    with:
+        packages-config-path: HL7SenderWinForm2015/packages.config
 
     - name: MS Build
       run: msbuild HL7SenderWinForm2015.sln
       
-
     - name: Upload Wix MSI Build Artifact
       uses: actions/upload-artifact@v3.2.1-node20
       with:
