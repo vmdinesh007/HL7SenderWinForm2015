@@ -23,10 +23,8 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v2.0.0
 
-    - name: restore-nuget-packages
-      uses: IT-Service/restore-nuget-packages@v1.0.2
-      with: 
-         packages-config-path: HL7SenderWinForm2015/packages.config
+    - name: Restore nuget packages
+      run: nuget restore HL7SenderWinForm2015.sln
     
     - name: MS Build
       run: msbuild HL7SenderWinForm2015.sln
