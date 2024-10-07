@@ -30,6 +30,7 @@ jobs:
     - name: MS Build
       run: msbuild HL7SenderWinForm2015.sln
       working-directory: HL7SenderWinForm2015
+      
 
     - name: Upload Wix MSI Build Artifact
       uses: actions/upload-artifact@v3.2.1-node20
