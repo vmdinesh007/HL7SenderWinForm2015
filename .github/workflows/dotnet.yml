@@ -30,7 +30,7 @@ jobs:
       run: msbuild HL7SenderWinForm2015.sln
       
     - name: Upload Wix MSI Build Artifact
-      uses: actions/upload-artifact@v3.2.1-node20
+      uses: actions/upload-artifact@4.4.3
       with:
         name: HL7-Installer
         path: HL7_Setup/bin/Debug/en-US
